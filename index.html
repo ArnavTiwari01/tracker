@@ -57,7 +57,7 @@ li.full{border-color:rgba(255,255,255,.25)}li.full .cn{color:var(--mute);text-de
 .mobhead{display:none}@media(max-width:640px){.nav{display:none}.mobhead{display:block}.tabs{display:grid}.prof{width:120px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-/* ===== BACKGROUND – fixed on every page ===== */
+/* ===== BACKGROUND ===== */
 #bg{
   position:fixed;
   inset:0;
@@ -69,11 +69,7 @@ li.full{border-color:rgba(255,255,255,.25)}li.full .cn{color:var(--mute);text-de
   position:fixed;
   inset:0;
   z-index:-1;
-  /* ~55 % dark overlay so the desk + city stay readable */
-  background:linear-gradient(180deg,
-    rgba(10,10,12,.45),
-    rgba(10,10,12,.58)
-  );
+  background:linear-gradient(180deg, rgba(10,10,12,.42), rgba(10,10,12,.58));
 }
 
 .clk{font-weight:700;font-size:14px;letter-spacing:.08em;font-variant-numeric:tabular-nums}
@@ -126,7 +122,7 @@ function overall(p){const a=SUBJ.map(s=>stats(s,p));const done=a.reduce((x,y)=>x
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const hash=async x=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('c12:'+x)))].map(b=>b.toString(16).padStart(2,'0')).join('');
 
-// ---- storage: each signed-in viewer gets a private doc; localStorage fallback ----
+// ---- storage ----
 let state={progress:{}},ref=null,saving=Promise.resolve(),mode='local',who='';
 const firstProgress=d=>d&&d.progress?{...d.progress}:(d&&d.profiles?{...((Object.values(d.profiles)[0]||{}).progress||{})}:null);
 let dirty=0,syncErr=false;
@@ -178,7 +174,7 @@ function tracker(){
  tickClock();showQuote();
 }
 
-// ---- extras: preferences, flip clock, quotes ----
+// ---- extras ----
 let P={h24:false,quotes:true};
 try{Object.assign(P,JSON.parse(localStorage.getItem('c12prefs')||'{}'))}catch(e){}
 const savePrefs=()=>{try{localStorage.setItem('c12prefs',JSON.stringify(P))}catch(e){}};
@@ -204,7 +200,6 @@ let qi=Math.floor(Math.random()*Q.length);
 function showQuote(){const e=document.getElementById('quote');if(e)e.textContent=P.quotes?Q[qi]:''}
 setInterval(()=>{qi=(qi+1)%Q.length;const e=document.getElementById('quote');if(!e)return;e.style.opacity=0;setTimeout(()=>{showQuote();e.style.opacity=1},500)},20000);
 
-// floating settings panel
 const dock=document.getElementById('dock');let panelOpen=false;
 const chips=(items,cur,a)=>items.map(([k,n])=>`<button class="chip ${cur===k?'on':''}" data-${a}="${k}">${n}</button>`).join('');
 function drawDock(){
