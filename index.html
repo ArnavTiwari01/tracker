@@ -12,7 +12,7 @@
 body{background:#121214;color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .wrap{max-width:860px;margin:0 auto;padding:24px 20px 110px}
-.card{background:rgba(26,26,30,.6);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.card{background:rgba(26,26,30,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
 .label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);font-weight:500}
 .mute{color:var(--mute)}
 h1{font-weight:800;letter-spacing:-.03em;margin:0}
@@ -56,8 +56,26 @@ li.full{border-color:rgba(255,255,255,.25)}li.full .cn{color:var(--mute);text-de
 .tabs button{padding:16px 0;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--mute)}.tabs button.on{color:var(--ink)}
 .mobhead{display:none}@media(max-width:640px){.nav{display:none}.mobhead{display:block}.tabs{display:grid}.prof{width:120px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-#bg{position:fixed;inset:0;z-index:-2;background:url(bg/rainy-desk.jpg) center bottom/cover no-repeat}
-#scrim{position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,10,12,.3),rgba(10,10,12,.6))}
+
+/* ===== BACKGROUND – fixed on every page ===== */
+#bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:url(background.png) center bottom / cover no-repeat;
+  background-color:#0a0a0c;
+}
+#scrim{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  /* ~55 % dark overlay so the desk + city stay readable */
+  background:linear-gradient(180deg,
+    rgba(10,10,12,.45),
+    rgba(10,10,12,.58)
+  );
+}
+
 .clk{font-weight:700;font-size:14px;letter-spacing:.08em;font-variant-numeric:tabular-nums}
 .focus{margin-bottom:44px}
 .wrap{text-shadow:0 1px 14px rgba(0,0,0,.6)}
@@ -87,7 +105,12 @@ li.full{border-color:rgba(255,255,255,.25)}li.full .cn{color:var(--mute);text-de
 .chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 @media(max-width:640px){.fab{bottom:calc(72px + env(safe-area-inset-bottom,0px))}.panel{bottom:calc(128px + env(safe-area-inset-bottom,0px))}}
 </style></head>
-<body><div id="bg"></div><div id="scrim"></div><div class="wrap" id="app"></div><div id="dock"></div>
+<body>
+<div id="bg"></div>
+<div id="scrim"></div>
+<div class="wrap" id="app"></div>
+<div id="dock"></div>
+
 <script>
 const NP=[['notes','Notes'],['pyqs','PYQs']],M3=[['oneshot','One Shot'],['ncert','NCERT'],['pyqs','PYQs']];
 const SUBJ=[
